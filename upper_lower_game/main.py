@@ -6,8 +6,10 @@ import os
 game_over = False
 score = 0
 
+list_length = len(data)
+
 def get_randint():
-  return random.randint(0, len(data))
+  return random.randint(0, list_length)
 
 def guess():
   return input("Who has more follows? Type 'A' or 'B'': ").upper()
@@ -17,6 +19,10 @@ while not game_over:
 
   data_1 = data[get_randint()]
   data_2 = data[get_randint()]
+  if data_1 == data_2:
+    data_2 = data[get_randint()]
+  print(logo)
+  print(f"Your current score is: {str(score)}")
   print(f"Compare A: {data_1.get('name')}, a {data_1.get('description')}, from {data_1.get('country')}")
   print(vs)
   print(f"Against B: {data_2.get('name')}, a {data_2.get('description')}, from {data_2.get('country')}")
