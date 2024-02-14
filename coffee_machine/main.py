@@ -108,11 +108,8 @@ while machine_on:
         print("You ordered a coffee")
     elif user_input == "off":
         machine_on = False
+        print("The coffee machine has been switched off. GOOD BYE!")
     elif user_input == "report":
         print_report(resources)
     else:
         print("You didn't select a valid option...")
-
-print("The coffee machine has been switched off. GOOD BYE!")
-
-print_report(resources)
