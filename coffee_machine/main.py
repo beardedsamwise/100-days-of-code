@@ -55,21 +55,11 @@ def process_coins(req_amount):
     """
     total = 0.0
     change = 0.0
-    coins_provided = {
-        "quarters": 0,
-        "dimes": 0,
-        "nickles": 0,
-        "pennies": 0
-    }
-
-    coins_provided["quarters"] = input("Insert the number of Quarters you have: ")
-    coins_provided["dimes"] = input("Insert the number of Dimes you have: ")
-    coins_provided["nickles"] = input("Insert the number of Nickles you have: ")
-    coins_provided["pennies"] = input("Insert the number of Pennies you have: ")
-    total += coins_provided["quarters"] * COIN_VALUES["quarter"]
-    total += coins_provided["dimes"] * COIN_VALUES["dime"]
-    total += coins_provided["nickles"] * COIN_VALUES["nickle"]
-    total += coins_provided["pennies"] * COIN_VALUES["pennie"]
+    
+    total += input("Insert the number of Quarters you have: ") * COIN_VALUES["quarter"]
+    total += input("Insert the number of Dimes you have: ") * COIN_VALUES["dime"]
+    total += input("Insert the number of Nickles you have: ") * COIN_VALUES["nickle"]
+    total += input("Insert the number of Pennies you have: ") * COIN_VALUES["pennie"]
 
     if total < req_amount:
         enough_money = False
