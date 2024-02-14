@@ -1,4 +1,4 @@
-# TODO: process coffee order
+# TODO: Espresso shouldn't use milk... Set different values for different coffees, maybe add chocolate for the cappuccino.
 
 from art import CUP
 
@@ -55,11 +55,11 @@ def process_coins(req_amount):
     """
     total = 0.0
     change = 0.0
-    
-    total += input("Insert the number of Quarters you have: ") * COIN_VALUES["quarter"]
-    total += input("Insert the number of Dimes you have: ") * COIN_VALUES["dime"]
-    total += input("Insert the number of Nickles you have: ") * COIN_VALUES["nickle"]
-    total += input("Insert the number of Pennies you have: ") * COIN_VALUES["pennie"]
+
+    total += float(input("Insert the number of Quarters you have: ")) * COIN_VALUES["quarter"]
+    total += float(input("Insert the number of Dimes you have: ")) * COIN_VALUES["dime"]
+    total += float(input("Insert the number of Nickles you have: ")) * COIN_VALUES["nickle"]
+    total += float(input("Insert the number of Pennies you have: ")) * COIN_VALUES["pennie"]
 
     if total < req_amount:
         enough_money = False
@@ -81,10 +81,15 @@ PRICES = {
     "latte" : 2.5,
     "cappuccino" : 2.60
 }
-
-resources = {
-    "water" : 300,
+COFFEE_INGREDIENTS = {
+    "water" : 50,
     "milk" : 50,
+    "coffee" : 14
+}
+
+machine_resources = {
+    "water" : 300,
+    "milk" : 200,
     "coffee" : 76,
     "money" : 2.5
 }
@@ -95,11 +100,24 @@ while machine_on:
     print_art()
     user_input = prompt_user() 
     if user_input in PRICES.keys():
-        print("You ordered a coffee")
+        req_amount = PRICES[user_input]
+        change, enough_money = process_coins(req_amount)
+        if enough_money and check_resources(machine_resources, COFFEE_INGREDIENTS):
+            machine_resources["coffee"] -= COFFEE_INGREDIENTS["coffee"]
+            machine_resources["milk"] -= COFFEE_INGREDIENTS["milk"]
+            machine_resources["water"] -= COFFEE_INGREDIENTS["water"]
+            machine_resources["money"] += PRICES[user_input]
+            if change > 0:
+                print(f"Here is your change: ${change}")
+            print(f"Thanks for ordering a {user_input}, we hope you enjoy it!")
+        elif not check_resources(machine_resources, COFFEE_INGREDIENTS):
+            print("Sorry, the machine is out of resources to make your coffee....")
+        elif not enough_money:
+            print("Sorry, you didn't put enough coins into the machine...")
     elif user_input == "off":
         machine_on = False
         print("The coffee machine has been switched off. GOOD BYE!")
     elif user_input == "report":
-        print_report(resources)
+        print_report(machine_resources)
     else:
         print("You didn't select a valid option...")
