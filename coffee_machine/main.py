@@ -1,4 +1,4 @@
-# TODO: allow hidden operation of "off" to exit program
+# TODO: process coffee order
 
 from art import CUP
 
