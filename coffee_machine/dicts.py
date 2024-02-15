@@ -1,3 +1,5 @@
+"""Module providing the dictionaries required for the coffee machine."""
+
 MENU = {
     "espresso": {
         "ingredients": {
