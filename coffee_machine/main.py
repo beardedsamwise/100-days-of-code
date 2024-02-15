@@ -1,6 +1,7 @@
 # TODO: Espresso shouldn't use milk... Set different values for different coffees, maybe add chocolate for the cappuccino.
 
 from art import CUP
+from dicts import MENU, COIN_VALUES, machine_resources
 
 def print_art():
     """Prints coffee cup"""
@@ -36,7 +37,10 @@ def check_resources(res_current, res_request):
     Returns:
     bool: True if there are enough resources, False otherwise.
     """
-    milk = res_request["milk"] <= res_current["milk"]
+    if "milk" in res_request.keys():
+        milk = res_request["milk"] <= res_current["milk"]
+    else:
+        milk = True
     water = res_request["water"] <= res_current["water"]
     coffee = res_request["coffee"] <= res_current["coffee"]
     if milk and water and coffee:
@@ -69,48 +73,25 @@ def process_coins(req_amount):
         enough_money = True
         return change, enough_money
 
-COIN_VALUES = {
-    "quarter" : 0.25,
-    "dime" : 0.10,
-    "nickle" : 0.05,
-    "pennie" : 0.01
-}
-
-PRICES = {
-    "espresso" : 2.0,
-    "latte" : 2.5,
-    "cappuccino" : 2.60
-}
-COFFEE_INGREDIENTS = {
-    "water" : 50,
-    "milk" : 50,
-    "coffee" : 14
-}
-
-machine_resources = {
-    "water" : 300,
-    "milk" : 200,
-    "coffee" : 76,
-    "money" : 2.5
-}
-
 machine_on = True
 
 while machine_on:
     print_art()
     user_input = prompt_user() 
-    if user_input in PRICES.keys():
-        req_amount = PRICES[user_input]
-        change, enough_money = process_coins(req_amount)
-        if enough_money and check_resources(machine_resources, COFFEE_INGREDIENTS):
-            machine_resources["coffee"] -= COFFEE_INGREDIENTS["coffee"]
-            machine_resources["milk"] -= COFFEE_INGREDIENTS["milk"]
-            machine_resources["water"] -= COFFEE_INGREDIENTS["water"]
-            machine_resources["money"] += PRICES[user_input]
+    if user_input in MENU.keys():
+        req_coins = MENU[user_input]["cost"] 
+        req_ingredients = MENU[user_input]["ingredients"] 
+        change, enough_money = process_coins(req_coins) 
+        if enough_money and check_resources(machine_resources, req_ingredients):
+            if "milk" in req_ingredients.keys():
+                machine_resources["milk"] -= req_ingredients["milk"]
+            machine_resources["coffee"] -= req_ingredients["coffee"]
+            machine_resources["water"] -= req_ingredients["water"]
+            machine_resources["money"] += req_coins
             if change > 0:
                 print(f"Here is your change: ${change}")
             print(f"Thanks for ordering a {user_input}, we hope you enjoy it!")
-        elif not check_resources(machine_resources, COFFEE_INGREDIENTS):
+        elif not check_resources(machine_resources, req_ingredients):
             print("Sorry, the machine is out of resources to make your coffee....")
         elif not enough_money:
             print("Sorry, you didn't put enough coins into the machine...")
