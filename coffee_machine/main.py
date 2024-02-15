@@ -1,5 +1,3 @@
-# TODO: Espresso shouldn't use milk... Set different values for different coffees, maybe add chocolate for the cappuccino.
-
 from art import CUP
 from dicts import MENU, COIN_VALUES, machine_resources
 
