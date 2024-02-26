@@ -11,7 +11,6 @@ coffee_menu = Menu()
 money_machine = MoneyMachine()
 
 while power:
-    print()
     selection = input(f"What beverage would you like? {coffee_menu.get_items()}: ")
     if selection == "report":
         coffee_machine.report()
