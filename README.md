@@ -1,6 +1,6 @@
 # What is this repository? 
 
-The code in this repository is my progress in the 100 days of code Udemy course. I will be updating this repository regularly with the code I write for the course.
+The code in this repository is my progress in the 100 Days of Code: The Complete Python Pro Bootcamp Udemy course. I will be updating this repository regularly with the code I write for the course.
 
 # What is 100 Days of Code?
 
